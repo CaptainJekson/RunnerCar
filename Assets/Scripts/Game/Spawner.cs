@@ -4,7 +4,7 @@ using UnityEngine;
 public class Spawner : MonoBehaviour
 {
     [SerializeField] private List<Transform> _units;
-    [SerializeField] private Player _player;
+    [SerializeField] private PlayerCar _player;
 
     [SerializeField] [Range(0, 100)] private float _distanceMin;
     [SerializeField] [Range(0, 100)] private float _distanceMax;
@@ -27,10 +27,10 @@ public class Spawner : MonoBehaviour
     private void Update()
     {
         if (_player.IsMoving)
-            GenerateUnit();
+            Generate();
     }
 
-    private void GenerateUnit()
+    private void Generate()
     {
         float distanceSpawn = transform.position.z - _startPosition.z;
 

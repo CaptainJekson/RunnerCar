@@ -1,23 +1,19 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.EventSystems;
 
-public class Player : MonoBehaviour
+public class PlayerCar : Car
 {
-    [SerializeField] [Range(0, 50)] private float _speed;
     [SerializeField] [Range(0, 20)] private float _sideSpeed;
 
-    [SerializeField] private Transform _pointRightLine;
-    [SerializeField] private Transform _pointMiddleLine;
-    [SerializeField] private Transform _pointLeftLine;
+    [SerializeField] private Transform _rightLinePosition;
+    [SerializeField] private Transform _middleLinePosition;
+    [SerializeField] private Transform _leftLinePosition;
 
-    [SerializeField] private GameObject _gameOverPanel;
-
-    private Vector3 _targetSidePosition;
+    private Vector3 _targetLinePosition;
 
     public event UnityAction PointAdded;
     public event UnityAction PlayerLoad;
-    public event UnityAction<int> PlayerDied;
+    public event UnityAction PlayerDied;
 
     public bool IsMoving { get; private set; }
     public int Score { get; private set; }
@@ -25,22 +21,21 @@ public class Player : MonoBehaviour
     private void Start()
     {
         PlayerLoad?.Invoke();
-        _targetSidePosition = _pointMiddleLine.position;
+        _targetLinePosition = _middleLinePosition.position;
         IsMoving = false;
     }
 
     private void Update()
     {
-        ChangeLine(KeyCode.D, _pointRightLine.position, _pointLeftLine.position);
-        ChangeLine(KeyCode.A, _pointLeftLine.position, _pointRightLine.position);
+        ChangeLine(KeyCode.D, _rightLinePosition.position, _leftLinePosition.position);
+        ChangeLine(KeyCode.A, _leftLinePosition.position, _rightLinePosition.position);
 
         StartMove(KeyCode.Space);
     }
 
     public void Die()
     {
-        _gameOverPanel.SetActive(true);
-        PlayerDied?.Invoke(Score);
+        PlayerDied?.Invoke();
         Destroy(gameObject);
     }
 
@@ -54,10 +49,10 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKeyDown(keyCode))
         {
-            if (_pointMiddleLine.position.x == transform.position.x)
-                _targetSidePosition = forward;
+            if (_middleLinePosition.position.x == transform.position.x)
+                _targetLinePosition = forward;
             if (backward.x == transform.position.x)
-                _targetSidePosition = _pointMiddleLine.position;
+                _targetLinePosition = _middleLinePosition.position;
         }
     }
 
@@ -69,13 +64,8 @@ public class Player : MonoBehaviour
         if (IsMoving)
         {
             MoveForward(_speed);
-            MoveSide(_sideSpeed, _targetSidePosition);
+            MoveSide(_sideSpeed, _targetLinePosition);
         }
-    }
-
-    private void MoveForward(float speed)
-    {
-        transform.position = Vector3.MoveTowards(transform.position, transform.position + Vector3.forward, speed * Time.deltaTime);
     }
 
     private void MoveSide(float speed, Vector3 target)

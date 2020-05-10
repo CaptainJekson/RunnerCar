@@ -11,7 +11,7 @@ public class Coin : MonoBehaviour
 
     private void OnTriggerEnter(Collider collider)
     {
-        Player player = collider.GetComponent<Player>();
+        PlayerCar player = collider.GetComponent<PlayerCar>();
 
         if (player)
         {

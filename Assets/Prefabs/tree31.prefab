@@ -123,7 +123,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dca5447fd6bfd043b3b49f92e1f1903, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _distanceDestroy: 100
+  _destructionDistance: 100
 --- !u!28 &-6653761735372449840
 Texture2D:
   m_ObjectHideFlags: 0

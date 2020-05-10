@@ -6,7 +6,7 @@ using System.Collections;
 [RequireComponent(typeof(Animator))]
 public class Score : MonoBehaviour
 {
-    [SerializeField] private Player _player;
+    [SerializeField] private PlayerCar _player;
 
     private TMP_Text _text;
     private Animator _animator;

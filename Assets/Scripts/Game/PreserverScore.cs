@@ -4,33 +4,27 @@ using UnityEngine;
 
 public class PreserverScore : MonoBehaviour
 {
-    [SerializeField] private Player _player;
-
-    //private void Awake()
-    //{
-    //    DontDestroyOnLoad(gameObject);
-    //}
+    [SerializeField] private PlayerCar _player;
 
     private void OnEnable()
     {
-        _player.PlayerLoad += () => _player.AddScore(Load());
-        _player.PlayerDied += Save;
+        _player.PlayerLoad += ToLoad;
+        _player.PlayerDied += ToSave;
     }
 
     private void OnDisable()
     {
-        _player.PlayerLoad -= () => _player.AddScore(Load());
-        _player.PlayerDied -= Save;
+        _player.PlayerLoad -= ToLoad;
+        _player.PlayerDied -= ToSave;
     }
 
-    private void Save(int score)
+    private void ToSave()
     {
-        PlayerPrefs.SetInt("Score", score);
+        PlayerPrefs.SetInt("Score", _player.Score);
     }
 
-    private int Load()
+    private void ToLoad()
     {
-        return PlayerPrefs.GetInt("Score");
-
+        _player.AddScore(PlayerPrefs.GetInt("Score"));
     }
 }

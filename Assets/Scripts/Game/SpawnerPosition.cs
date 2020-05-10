@@ -2,8 +2,8 @@
 
 public class SpawnerPosition : MonoBehaviour
 {
-    [SerializeField] private Player _player;
-    [SerializeField] private float _distanceToPlayer;
+    [SerializeField] private PlayerCar _player;
+    [SerializeField] [Range(0, 150)] private float _distanceToPlayer;
 
     private void Update()
     {
