@@ -11,8 +11,9 @@ public class PlayerCar : Car
 
     private Vector3 _targetLinePosition;
 
-    public event UnityAction PointAdded;
     public event UnityAction PlayerLoad;
+    public event UnityAction PlayerStarted;
+    public event UnityAction PointAdded;
     public event UnityAction PlayerDied;
 
     public bool IsMoving { get; private set; }
@@ -59,7 +60,10 @@ public class PlayerCar : Car
     private void StartMove(KeyCode keyCode)
     {
         if (Input.GetKeyDown(keyCode))
+        {
             IsMoving = true;
+            PlayerStarted?.Invoke();
+        }
 
         if (IsMoving)
         {

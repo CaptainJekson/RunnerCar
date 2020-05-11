@@ -31,12 +31,12 @@ public class Score : MonoBehaviour
     {
         _text.text = _player.Score.ToString();
         _animator.SetBool("State", true);
-        StartCoroutine(DelayIdleState());
+        StartCoroutine(DelayIdleAnimation(0.6f));
     }
 
-    private IEnumerator DelayIdleState()
+    private IEnumerator DelayIdleAnimation(float timeDelay)
     {
-        yield return new WaitForSeconds(0.7f);
+        yield return new WaitForSeconds(timeDelay);
         _animator.SetBool("State", false);
     }
 }
